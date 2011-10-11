@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def admin_namespace?
-    controller.class.name.split("::").first=="Admin"
+    false
   end
 
   def projects_namespace?
@@ -31,21 +31,18 @@ module ApplicationHelper
   end
 
   def search_autocomplete_source
-    projects = current_user.projects.map{ |p| { :label => p.name, :url => project_path(p) } }
+    projects = Project.all.map{ |p| { :label => p.name, :url => project_path(p) } }
     default_nav = [
-      { :label => "Projects", :url => projects_path }, 
-      { :label => "Admin", :url => admin_root_path }
+      { :label => "Projects", :url => projects_path }
     ]
 
     project_nav = []
 
     if @project && !@project.new_record?
       project_nav = [
-        { :label => "#{@project.code} / Issues", :url => project_issues_path(@project) }, 
         { :label => "#{@project.code} / Wall", :url => wall_project_path(@project) }, 
         { :label => "#{@project.code} / Tree", :url => tree_project_path(@project) }, 
-        { :label => "#{@project.code} / Commits", :url => project_commits_path(@project) }, 
-        { :label => "#{@project.code} / Team", :url => team_project_path(@project) }
+        { :label => "#{@project.code} / Commits", :url => project_commits_path(@project) }
       ]
     end
 

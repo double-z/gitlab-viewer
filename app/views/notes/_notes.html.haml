@@ -4,8 +4,7 @@
 
 %br
 %br
-- if can? current_user, :write_note, @project
-  = render "notes/form"
+= render "notes/form"
 
 :javascript
   $('.delete-note').live('ajax:success', function() {  

@@ -1,14 +1,10 @@
-- if current_user.can_create_project?
-  = link_to 'New Project', new_project_path, :class => "lbutton vm"
+= link_to 'New Project', new_project_path, :class => "lbutton vm"
 
 %table.round-borders#projects-list
   %tr
     %th Name
     %th Path
     %th Code
-    %th Web
-    %th Git
-    %th Admin
     %th Actions
 
   - @projects.each do |project|
@@ -16,12 +12,8 @@
       %td= project.name
       %td= truncate project.url_to_repo
       %td= project.code
-      %td= check_box_tag "read",   1, project.readers.include?(current_user), :disabled => :disabled
-      %td= check_box_tag "commit", 1, project.writers.include?(current_user), :disabled => :disabled
-      %td= check_box_tag "admin",  1, project.admins.include?(current_user), :disabled => :disabled
       %td 
-        -if can? current_user, :admin_project, project
-          = link_to 'Edit', edit_project_path(project), :class => "lbutton positive"
-          = link_to 'Remove', project, :method => :delete, :confirm => "Are you sure?", :class => "lbutton negative"
+        = link_to 'Edit', edit_project_path(project), :class => "lbutton positive"
+        = link_to 'Remove', project, :method => :delete, :confirm => "Are you sure?", :class => "lbutton negative"
 %br
 

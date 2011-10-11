@@ -3,10 +3,6 @@ require 'spec_helper'
 describe "Commits" do
   let(:project) { Factory :project }
   let!(:commit) { project.repo.commits.first }
-  before do 
-    login_as :user
-    project.add_access(@user, :read)
-  end
 
   describe "GET /commits" do
     before do 

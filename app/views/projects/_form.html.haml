@@ -19,9 +19,9 @@
       %tr
         %td
           .left= f.label :path
-          %cite.right git@yourserver:
+          %cite.right absolute path to repo:
         %td
-          = f.text_field :path, :placeholder => "example_project", :disabled => !@project.new_record?
+          = f.text_field :path, :placeholder => "example_project"
       %tr
         %td 
           .left= f.label :code

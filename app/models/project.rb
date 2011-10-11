@@ -1,11 +1,6 @@
 require "grit"
 
 class Project < ActiveRecord::Base
-  belongs_to :owner, :class_name => "User"
-
-  has_many :issues, :dependent => :destroy
-  has_many :users_projects, :dependent => :destroy
-  has_many :users, :through => :users_projects
   has_many :notes, :dependent => :destroy
 
   validates :name,
@@ -26,9 +21,6 @@ class Project < ActiveRecord::Base
             :uniqueness => true,
             :length   => { :within => 3..12 }
 
-  validates :owner,
-            :presence => true
-  
   before_save :format_code
 
   attr_protected :private_flag, :owner_id
@@ -45,28 +37,6 @@ class Project < ActiveRecord::Base
 
   def format_code
     read_attribute(:code).downcase.strip.gsub(' ', '')
-  end
-
-  def add_access(user, *access)
-    opts = { :user => user }
-    access.each { |name| opts.merge!(name => true) }
-    users_projects.create(opts)
-  end
-
-  def reset_access(user)
-    users_projects.where(:project_id => self.id, :user_id => user.id).destroy if self.id
-  end
-
-  def writers
-    @writers ||= users_projects.includes(:user).where(:write => true).map(&:user)
-  end
-
-  def readers
-    @readers ||= users_projects.includes(:user).where(:read => true).map(&:user)
-  end
-
-  def admins
-    @admins ||=users_projects.includes(:user).where(:admin => true).map(&:user)
   end
 
   def public?

@@ -1,13 +1,10 @@
 require 'spec_helper'
 
 describe "Projects" do
-  before { login_as :user }
-
   describe "GET /projects/tree" do
     describe "head" do
       before do 
         @project = Factory :project
-        @project.add_access(@user, :read)
 
         visit tree_project_path(@project)
       end
@@ -22,7 +19,6 @@ describe "Projects" do
     describe ValidCommit::ID do
       before do 
         @project = Factory :project
-        @project.add_access(@user, :read)
 
         visit tree_project_path(@project, :commit_id => ValidCommit::ID)
       end
@@ -38,8 +34,6 @@ describe "Projects" do
     describe "branch passed" do
       before do 
         @project = Factory :project
-        @project.add_access(@user, :read)
-
         visit tree_project_path(@project, :branch => "master")
       end
 
@@ -55,7 +49,6 @@ describe "Projects" do
     describe "file preview" do
       before do 
         @project = Factory :project
-        @project.add_access(@user, :read)
 
         visit tree_project_path(@project, :path => ".rvmrc")
       end
@@ -74,7 +67,6 @@ describe "Projects" do
   describe "GET /projects/blob" do
     before do 
       @project = Factory :project
-      @project.add_access(@user, :read)
 
       visit blob_project_path(@project,
                               :path => ValidCommit::BLOB_FILE_PATH,

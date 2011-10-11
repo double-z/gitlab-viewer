@@ -4,10 +4,6 @@ require 'file_size_validator'
 class Note < ActiveRecord::Base
   belongs_to :project
   belongs_to :noteable, :polymorphic => true
-  belongs_to :author,
-    :class_name => "User"
-
-  attr_protected :author, :author_id 
 
   validates_presence_of :project
 

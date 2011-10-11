@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe "Top Panel", :js => true do
-  before { login_as :user }
-
   describe "Search autocomplete" do
     before do 
       visit projects_path
@@ -19,7 +17,6 @@ describe "Top Panel", :js => true do
   describe "with project" do
     before do 
       @project = Factory :project
-      @project.add_access(@user, :read)
       visit project_path(@project)
 
       fill_in "search", :with => "Commi"

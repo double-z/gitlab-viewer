@@ -1,22 +1,12 @@
 require 'spec_helper'
 
 describe Project do
-  describe "Associations" do
-    it { should have_many(:users) }
-    it { should have_many(:users_projects) }
-  end
-
   describe "Validation" do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:path) }
   end
 
   describe "Respond to" do
-    it { should respond_to(:readers) }
-    it { should respond_to(:writers) }
-    it { should respond_to(:admins) }
-    it { should respond_to(:add_access) }
-    it { should respond_to(:reset_access) }
     it { should respond_to(:public?) }
     it { should respond_to(:private?) }
     it { should respond_to(:url_to_repo) }

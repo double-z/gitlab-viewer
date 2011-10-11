@@ -3,14 +3,12 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.0'
 
 gem 'sqlite3'
-gem 'devise', "1.4.7"
 gem 'stamp'
 gem 'will_paginate', '~> 3.0'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'grit'
 gem "carrierwave"
-gem 'six'
 gem 'therubyracer'
 gem 'faker'
 gem 'seed-fu', :branch => 'rails-3-1', :git => 'git://github.com/mbleigh/seed-fu.git'

@@ -3,10 +3,6 @@ require "base64"
 class CommitsController < ApplicationController
   before_filter :project
 
-  # Authorize
-  before_filter :add_project_abilities
-  before_filter :authorize_read_project!
-
   def index
     @repo = project.repo
     @branch = if !params[:branch].blank?

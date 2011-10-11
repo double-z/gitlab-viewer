@@ -1,13 +1,8 @@
 class ProjectsController < ApplicationController
   before_filter :project, :except => [:index, :new, :create] 
 
-  # Authorize
-  before_filter :add_project_abilities
-  before_filter :authorize_read_project!, :except => [:index, :new, :create] 
-  before_filter :authorize_admin_project!, :only => [:edit, :update, :destroy] 
-
   def index
-    @projects = current_user.projects.all
+    @projects = Project.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,12 +82,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(params[:project])
-    @project.owner = current_user
-
-    Project.transaction do 
-      @project.save!
-      @project.users_projects.create!(:admin => true, :read => true, :write => true, :user => current_user)
-    end
+    @project.save!
 
     respond_to do |format|
       if @project.valid?
