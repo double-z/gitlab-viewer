@@ -6,13 +6,13 @@ describe "Top Panel", :js => true do
   describe "Search autocomplete" do
     before do 
       visit projects_path
-      fill_in "search", :with => "Ke"
+      fill_in "search", :with => "Pro"
       sleep(2)
-      find(:xpath, "//ul[contains(@class,'ui-autocomplete')]/li/a[.=\"Keys\"]").click
+      find(:xpath, "//ul[contains(@class,'ui-autocomplete')]/li/a[.=\"Projects\"]").click
     end
 
     it "should be on projects page" do
-      current_path.should == keys_path 
+      current_path.should == projects_path 
     end
   end
 

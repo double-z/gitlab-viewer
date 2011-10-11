@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def can_create_project?
-    projects_limit >= my_own_projects.count
+    true
   end
 end
 # == Schema Information

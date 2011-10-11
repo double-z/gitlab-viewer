@@ -14,12 +14,9 @@ describe Project do
   describe "Respond to" do
     it { should respond_to(:readers) }
     it { should respond_to(:writers) }
-    it { should respond_to(:gitosis_writers) }
     it { should respond_to(:admins) }
     it { should respond_to(:add_access) }
     it { should respond_to(:reset_access) }
-    it { should respond_to(:update_gitosis_project) }
-    it { should respond_to(:destroy_gitosis_project) }
     it { should respond_to(:public?) }
     it { should respond_to(:private?) }
     it { should respond_to(:url_to_repo) }
@@ -33,7 +30,6 @@ describe Project do
 
   it "should return valid url to repo" do 
     project = Project.new(:path => "somewhere")
-    project.url_to_repo.should == "git@localhost:somewhere.git"
   end
 
   it "should return path to repo" do 

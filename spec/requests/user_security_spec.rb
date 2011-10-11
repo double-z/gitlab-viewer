@@ -13,13 +13,6 @@ describe "Users Security" do
       it { new_user_session_path.should be_allowed_for :visitor }
     end
 
-    describe "GET /keys" do 
-      it { keys_path.should be_allowed_for @u1 }
-      it { keys_path.should be_allowed_for :admin }
-      it { keys_path.should be_allowed_for :user }
-      it { keys_path.should be_denied_for :visitor }
-    end
-
     describe "GET /profile" do 
       it { profile_path.should be_allowed_for @u1 }
       it { profile_path.should be_allowed_for :admin }

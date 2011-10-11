@@ -4,20 +4,11 @@ class UsersProject < ActiveRecord::Base
 
   attr_protected :project_id, :project
 
-  after_commit :update_gitosis_project
-
   validates_uniqueness_of :user_id, :scope => [:project_id]
   validates_presence_of :user_id
   validates_presence_of :project_id
  
   delegate :name, :email, :to => :user, :prefix => true
-
-  def update_gitosis_project
-    Gitosis.new.configure do |c|
-      c.update_project(project.path, project.gitosis_writers)
-    end
-  end
-
 end
 # == Schema Information
 #

@@ -28,12 +28,8 @@ class Project < ActiveRecord::Base
 
   validates :owner,
             :presence => true
-
-  validate :check_limit
   
   before_save :format_code
-  after_destroy :destroy_gitosis_project
-  after_save :update_gitosis_project
 
   attr_protected :private_flag, :owner_id
 
@@ -51,18 +47,6 @@ class Project < ActiveRecord::Base
     read_attribute(:code).downcase.strip.gsub(' ', '')
   end
 
-  def update_gitosis_project
-    Gitosis.new.configure do |c|
-      c.update_project(path, gitosis_writers)
-    end
-  end
-  
-  def destroy_gitosis_project
-    Gitosis.new.configure do |c|
-      c.destroy_project(self)
-    end
-  end
-  
   def add_access(user, *access)
     opts = { :user => user }
     access.each { |name| opts.merge!(name => true) }
@@ -75,11 +59,6 @@ class Project < ActiveRecord::Base
 
   def writers
     @writers ||= users_projects.includes(:user).where(:write => true).map(&:user)
-  end
-
-  def gitosis_writers
-    keys = Key.joins({:user => :users_projects}).where("users_projects.project_id = ? AND users_projects.write = ?", id, true)
-    keys.map(&:identifier)
   end
 
   def readers
@@ -99,11 +78,11 @@ class Project < ActiveRecord::Base
   end
 
   def url_to_repo
-    "#{GITOSIS["git_user"]}@#{GITOSIS["host"]}:#{path}.git"
+    path
   end
   
   def path_to_repo
-    GITOSIS["base_path"] + path + ".git"
+    path
   end
 
   def repo 
@@ -130,14 +109,6 @@ class Project < ActiveRecord::Base
     fcommit = commit if fcommit == :head
     tree = fcommit.tree
     path ? (tree / path) : tree
-  end
-
-  def check_limit
-    unless owner.can_create_project?
-      errors[:base] << ("Your own projects limit is #{owner.projects_limit}! Please contact administrator to increase it")
-    end
-  rescue 
-    errors[:base] << ("Cant check your ability to create project")
   end
 
   def valid_repo?

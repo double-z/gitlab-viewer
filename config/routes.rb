@@ -17,7 +17,6 @@ Gitlab::Application.routes.draw do
   #get "profile/:id", :to => "profile#show"
 
   resources :projects, :only => [:new, :create, :index]
-  resources :keys
   devise_for :users
 
   resources :projects, :except => [:new, :create, :index], :path => "/" do 

@@ -22,5 +22,6 @@
       %td 
         -if can? current_user, :admin_project, project
           = link_to 'Edit', edit_project_path(project), :class => "lbutton positive"
+          = link_to 'Remove', project, :method => :delete, :confirm => "Are you sure?", :class => "lbutton negative"
 %br
 
